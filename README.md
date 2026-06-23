@@ -5,10 +5,19 @@ YUPAY TURISMO alojado en Google Drive. Pensado para desplegarse en **Vercel**.
 
 ## Cómo funciona
 - `app/page.tsx`: página con el botón **Descargar APK** (y un QR para el móvil).
-- `app/api/download/route.ts`: redirige (302) al enlace de descarga de Drive,
-  construido con la variable de entorno `APK_FILE_ID`.
+- `app/api/download/route.ts`: **proxy**. El servidor baja el APK de Google Drive
+  y lo reenvía al usuario con cabecera de descarga (`attachment`). Reenvía la
+  cabecera `Range` para permitir descargas reanudables.
 
 El ID del archivo de Drive **no** está en el código: vive en `APK_FILE_ID`.
+
+> ⚠️ **Por qué un proxy y no un redirect a Drive:** para archivos >25 MB, Drive
+> muestra una pantalla intermedia de advertencia ("no se pudo analizar en busca
+> de virus") cuando la petición es una navegación de navegador, incluso con
+> `confirm=t`; y un `fetch` CORS recibe un 403. Solo una petición desde el
+> servidor (sin cabeceras de navegador) obtiene el binario directo, así que el
+> route handler lo descarga y lo retransmite. Por eso el route corre en runtime
+> Node con `maxDuration = 60`.
 
 ## Desarrollo local
 ```bash
