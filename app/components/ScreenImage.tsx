@@ -3,31 +3,33 @@
 import { useState } from 'react';
 import PlaceholderScreen from './PlaceholderScreen';
 
-// Muestra la captura real si existe; si falta (o falla al cargar) cae al
-// placeholder de marca. Así basta con dejar el archivo en /public/screenshots/.
+// Muestra la captura del tema activo (claro/oscuro) — se renderizan ambas y el CSS
+// enseña la que toca según [data-theme]. Si faltan (o fallan), cae al placeholder.
+// Las imágenes son decorativas (alt=""): el marco contenedor aporta el aria-label.
 export default function ScreenImage({
-  src,
+  light,
+  dark,
   label,
   hint,
 }: {
-  src?: string;
+  light?: string;
+  dark?: string;
   label: string;
   hint?: string;
 }) {
   const [failed, setFailed] = useState(false);
 
-  if (!src || failed) {
+  if ((!light && !dark) || failed) {
     return <PlaceholderScreen label={label} hint={hint} />;
   }
 
+  const onError = () => setFailed(true);
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={`Captura de ${label} en Yupay Turismo`}
-      loading="lazy"
-      decoding="async"
-      onError={() => setFailed(true)}
-    />
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="shot shot-light" src={light ?? dark} alt="" loading="lazy" decoding="async" onError={onError} />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="shot shot-dark" src={dark ?? light} alt="" loading="lazy" decoding="async" onError={onError} />
+    </>
   );
 }

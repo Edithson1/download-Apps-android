@@ -1,5 +1,5 @@
 import Icon from './Icons';
-import PhoneMockup from './PhoneMockup';
+import FeatureMedia from './FeatureMedia';
 import type { Feature } from '../lib/features';
 
 export default function FeatureSection({
@@ -31,7 +31,7 @@ export default function FeatureSection({
       </div>
 
       <div className="feature-media">
-        <PhoneMockup src={feature.screenshot} label={feature.screenLabel} hint={feature.title} />
+        <FeatureMedia feature={feature} />
       </div>
     </article>
   );

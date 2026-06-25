@@ -1,11 +1,23 @@
 // Contenido de la landing: features estrella, tarjetas, idiomas, pasos e insignias.
 //
-// CAPTURAS: cada feature apunta a una imagen en /public/screenshots/. Mientras el
-// archivo no exista se muestra automáticamente un placeholder de marca (no rompe
-// nada). Para usar tu captura real, basta con dejar el PNG/JPG con ese nombre en
-// `public/screenshots/` — no hay que tocar código.
+// CAPTURAS por tema: cada pantalla tiene su variante clara y oscura en
+// /public/screenshots/ (p.ej. home-light.jpeg / home-dark.jpeg). La web muestra
+// la del tema activo. `visits` solo existe en oscuro: se usa esa para ambos.
 
 export type FeatureStatus = 'available' | 'soon';
+
+/** Par de imágenes (clara/oscura) de una misma pantalla. */
+export type Shot = { light: string; dark: string };
+
+const DIR = '/screenshots';
+const shot = (base: string): Shot => ({
+  light: `${DIR}/${base}-light.jpeg`,
+  dark: `${DIR}/${base}-dark.jpeg`,
+});
+// `visits` solo tiene captura en modo oscuro.
+const visitsShot: Shot = { light: `${DIR}/visits-dark.jpeg`, dark: `${DIR}/visits-dark.jpeg` };
+
+export type Tilt = 'left' | 'right';
 
 export type Feature = {
   id: string;
@@ -13,13 +25,16 @@ export type Feature = {
   title: string;
   text: string;
   points: string[];
-  screenshot?: string;
+  phone: Shot;
+  /** Captura secundaria recortada en un cuadrado, superpuesta al teléfono. */
+  square?: Shot;
+  tilt?: Tilt;
   screenLabel: string;
   status: FeatureStatus;
 };
 
 export const HERO_SCREEN = {
-  screenshot: '/screenshots/home.png',
+  phone: shot('home'),
   label: 'Inicio · Dashboard',
 };
 
@@ -34,7 +49,9 @@ export const FEATURES: Feature[] = [
       'Descuentos fijos o porcentuales con total automático',
       'Multi-moneda: Soles, Dólares y Euros',
     ],
-    screenshot: '/screenshots/visitas.png',
+    phone: shot('new-visit'),
+    square: visitsShot,
+    tilt: 'right',
     screenLabel: 'Registro de visita',
     status: 'available',
   },
@@ -48,7 +65,8 @@ export const FEATURES: Feature[] = [
       'Visitas por día, ingresos en el tiempo y horas pico',
       'Filtros por periodo y resumen escrito en tu idioma',
     ],
-    screenshot: '/screenshots/dashboard.png',
+    phone: shot('dashboard'),
+    tilt: 'left',
     screenLabel: 'Gráficos de insights',
     status: 'available',
   },
@@ -62,7 +80,8 @@ export const FEATURES: Feature[] = [
       'Marcadores por país según tus visitas',
       'Modo pantalla completa',
     ],
-    screenshot: '/screenshots/mapa.png',
+    phone: shot('maps'),
+    tilt: 'right',
     screenLabel: 'Mapa de procedencias',
     status: 'available',
   },
@@ -76,7 +95,8 @@ export const FEATURES: Feature[] = [
       'Reproductor con velocidad y subtítulos',
       'Descarga de voces resumible y con caché local',
     ],
-    screenshot: '/screenshots/audio.png',
+    phone: shot('modelos-voz'),
+    tilt: 'left',
     screenLabel: 'Audioguías',
     status: 'available',
   },
@@ -90,8 +110,25 @@ export const FEATURES: Feature[] = [
       'Respaldo y sincronización en la nube',
       'Estado de sincronización siempre visible',
     ],
-    screenshot: '/screenshots/sync.png',
+    phone: shot('dispositivos-conectados'),
+    square: shot('qr'),
+    tilt: 'right',
     screenLabel: 'Sincronización',
+    status: 'available',
+  },
+  {
+    id: 'cuenta',
+    icon: 'security',
+    title: 'Cuenta y seguridad',
+    text: 'Crea tu cuenta y resguarda tus datos en la nube. Inicia sesión con correo o con Google de forma nativa.',
+    points: [
+      'Registro e inicio de sesión con correo',
+      'Google nativo (Credential Manager)',
+      'Recuperación de contraseña por código (OTP)',
+    ],
+    phone: shot('cuentas-google'),
+    tilt: 'left',
+    screenLabel: 'Cuenta y seguridad',
     status: 'available',
   },
 ];
@@ -103,11 +140,6 @@ export const MORE_FEATURES: MoreFeature[] = [
     icon: 'offline',
     title: 'Offline-first total',
     text: 'Registra, consulta y analiza sin conexión. Todo se sincroniza solo al recuperar la red.',
-  },
-  {
-    icon: 'security',
-    title: 'Cuenta segura',
-    text: 'Inicia con correo o con Google y recupera tu acceso con un código enviado a tu correo.',
   },
   {
     icon: 'catalog',

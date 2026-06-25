@@ -30,7 +30,8 @@ export default function Hero() {
 
         <div className="hero-media">
           <PhoneMockup
-            src={HERO_SCREEN.screenshot}
+            light={HERO_SCREEN.phone.light}
+            dark={HERO_SCREEN.phone.dark}
             label={HERO_SCREEN.label}
             hint="Resumen del día e insights"
           />
