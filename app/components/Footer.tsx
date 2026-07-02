@@ -26,6 +26,11 @@ export default function Footer() {
             <li>
               <a href={SITE.downloadHref}>Descargar APK</a>
             </li>
+            <li>
+              <a href={SITE.githubHref} target="_blank" rel="noopener noreferrer">
+                Código en GitHub
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -34,6 +39,11 @@ export default function Footer() {
           <ul>
             <li>{SITE.credit.challenge}</li>
             <li>Compatible con {SITE.androidMin}</li>
+            <li>
+              <a href={SITE.githubHref} target="_blank" rel="noopener noreferrer">
+                Repositorio en GitHub
+              </a>
+            </li>
           </ul>
         </div>
       </div>

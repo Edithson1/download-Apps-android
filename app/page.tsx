@@ -6,6 +6,7 @@ import LanguageBadges from './components/LanguageBadges';
 import Credibility from './components/Credibility';
 import DownloadButton from './components/DownloadButton';
 import QrCard from './components/QrCard';
+import Icon from './components/Icons';
 import Footer from './components/Footer';
 import { FEATURES, MORE_FEATURES, INSTALL_STEPS } from './lib/features';
 import { SITE } from './lib/site';
@@ -79,6 +80,31 @@ export default function Home() {
               Nacido del reto «Del cuaderno al insight»
             </h2>
             <Credibility />
+          </div>
+        </section>
+
+        {/* Código abierto */}
+        <section id="codigo" className="section cred" aria-labelledby="codigo-title">
+          <div className="wrap">
+            <span className="eyebrow">Código abierto</span>
+            <h2 id="codigo-title" className="section-title">
+              El proyecto es open source
+            </h2>
+            <p className="section-sub" style={{ marginInline: 'auto' }}>
+              Explora el código, revisa cómo está construida la app y contribuye desde el
+              repositorio del proyecto en GitHub.
+            </p>
+            <div style={{ marginTop: 'var(--space-4)' }}>
+              <a
+                className="btn btn-primary btn-lg"
+                href={SITE.githubHref}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name="github" />
+                Ver en GitHub
+              </a>
+            </div>
           </div>
         </section>
 

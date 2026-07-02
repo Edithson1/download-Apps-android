@@ -8,6 +8,7 @@ export const SITE = {
   androidMin: 'Android 7.0 (API 24) o superior',
   downloadHref: '/api/download',
   apkName: 'yupay-turismo.apk',
+  githubHref: 'https://github.com/Edithson1/rural-tourism-project',
   nav: [
     { href: '#caracteristicas', label: 'Características' },
     { href: '#idiomas', label: 'Idiomas' },

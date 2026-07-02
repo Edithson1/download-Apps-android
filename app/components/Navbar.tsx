@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Logo from './Logo';
+import Icon from './Icons';
 import ThemeToggle from './ThemeToggle';
 import DownloadButton from './DownloadButton';
 import { SITE } from '../lib/site';
@@ -38,6 +39,15 @@ export default function Navbar() {
         </ul>
 
         <div className="nav-actions">
+          <a
+            className="icon-link"
+            href={SITE.githubHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ver el código en GitHub"
+          >
+            <Icon name="github" />
+          </a>
           <ThemeToggle />
           <span className="download-compact">
             <DownloadButton size="compact" />
@@ -75,6 +85,11 @@ export default function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <a href={SITE.githubHref} target="_blank" rel="noopener noreferrer" onClick={close}>
+              Código en GitHub
+            </a>
+          </li>
           <li>
             <DownloadButton size="compact" block />
           </li>
